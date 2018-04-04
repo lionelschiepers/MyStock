@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  mystockweb:
+    image: mystockweb
+    build:
+      context: .
+      dockerfile: MyStockWeb\Dockerfile

@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyStockWeb</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <link rel="stylesheet" type="text/css" href="~/css/tableSorter/style.css">
+</head>
+<body>
+    <div id="marketCost">Market cost:</div>
+    <div id="marketPrice">Market price:</div>
+    <div id="diff">Total diff:</div>
+    <div id="dayChange">Day diff:</div>
+    <div id="dividendYield">Net Dividend yield:</div>
+
+    <table id="positions" class="tablesorter">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Diff</th>
+                <th>Shares</th>
+                <th>Cost</th>
+                <th>Market price</th>
+                <th>Currency</th>
+                <th>Dividend %</th>
+                <th>Rsi</th>
+                <th>Gain</th>
+                <th>Position diff</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    Position by markets
+    <table id="markets" class="tablesorter">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Currency</th>
+                <th>Price (EUR)</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    Positions by currencies
+
+    <table id="currencies" class="tablesorter">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Price (EUR)</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript" src="~/js/jquery.tablesorter.js"></script>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function () {
+        
+            $.getJSON('@Url.Action("Data", "Portfolio", new { id= ViewContext.RouteData.Values["id"]??""})' /*'/Portfolio/Data/1'*/, function (data) {
+                $('#marketCost').append(Math.round(data.marketCost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + data.currency);
+                $('#marketPrice').append(Math.round(data.marketPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + data.currency);
+                $('#diff').append((100.0 * data.performance).toFixed(2) + '%');
+                $('#dayChange').append((100.0 * data.dayChange).toFixed(2) + '%');
+                $('#dividendYield').append((100.0 * data.dividendYield).toFixed(2) + '%');
+
+                $.each(data.positions, function (i, item) {
+                    $("#positions tbody").append('<tr><td><a href=\"' + item.security.url + '\">' + item.security.name + '</a></td><td>' + (+item.security.price.toFixed(2)) + '</td><td>' + (+(100.0 * item.security.performance).toFixed(2)) + '%</td><td>' + item.shares + '</td><td>' + Math.round(item.marketCost) + '</td><td>' + Math.round(item.marketPrice) + '</td><td>' + item.currency + '</td><td>' + (100.0 * item.security.dividendYield).toFixed(2) + '</td><td>' + item.security.rsi + '</td><td>' + Math.round(item.marketPrice - item.marketCost) + '</td><td>' + (100.0 * item.performance).toFixed(1) + '%</td></tr>');
+                });
+
+                $.each(data.marketPositions, function (i, item) {
+                    $("#markets tbody").append('<tr><td>' + item.name + '</td><td>' + Math.round(item.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td>' + item.currency + '</td><td>' + Math.round(item.priceEUR).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td>' + (+(100.0 * item.shareInPortfolio).toFixed(2)) + '%</td></tr>');
+                });
+
+                $.each(data.currencyPositions, function (i, item) {
+                    $("#currencies tbody").append('<tr><td>' + item.currency + '</td><td>' + Math.round(item.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td>' + Math.round(item.priceEUR).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td><td>' + (+(100.0 * item.shareInPortfolio).toFixed(2)) + '%</td></tr>');
+                });
+
+
+                $("#positions").tablesorter({
+                    // sort on the first column and third column, order asc
+                    sortList: [[0, 0]],
+                    widgets: ['zebra']
+                });
+
+                $("#markets").tablesorter({
+                    // sort on the first column and third column, order asc
+                    sortList: [[0, 0]],
+                    widgets: ['zebra']
+                });
+
+                $("#currencies").tablesorter({
+                    // sort on the first column and third column, order asc
+                    sortList: [[0, 0]],
+                    widgets: ['zebra']
+                });
+            });
+
+        });</script>
+
+
+</body>
+</html>
