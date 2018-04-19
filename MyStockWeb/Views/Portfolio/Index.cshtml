@@ -6,7 +6,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MyStockWeb</title>
+    <meta http-equiv="refresh" content="60">
+
+    <!-- <title>@ViewData["Title"] - MyStockWeb</title> -->
+    <title></title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -102,6 +105,8 @@
 
     <script type="text/javascript" id="js">
         $(document).ready(function () {
+            document.title = 'loading...';
+
         
             $.getJSON('@Url.Action("Data", "Portfolio", new { id= ViewContext.RouteData.Values["id"]??""})' /*'/Portfolio/Data/1'*/, function (data) {
                 $('#marketCost').append(Math.round(data.marketCost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + data.currency);
@@ -140,6 +145,9 @@
                     sortList: [[0, 0]],
                     widgets: ['zebra']
                 });
+
+                var d = new Date();
+                document.title = (100.0 * data.dayChange).toFixed(2) + '% (' + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes() + ')';
             });
 
         });</script>

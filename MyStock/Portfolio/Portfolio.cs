@@ -48,6 +48,8 @@ namespace MyStock
 			var positions = CalculatePosition();
 			foreach (var position in positions)
 			{
+				if (String.IsNullOrEmpty(position.Currency))
+					throw new NullReferenceException($"not currency for {position}");
 				double rate = ExchangeRates.ConvertTo(position.Currency, position.CostPrice, TargetCurrency);
 				result += rate;
 			}

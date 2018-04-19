@@ -31,7 +31,6 @@ namespace MyStock
 			}
 		}
 
-
 		public override double MarketPrice
 		{
 			get
@@ -52,6 +51,11 @@ namespace MyStock
 
 				return Shares * (Security.Price - Security.PreviousClosePrice);
 			}
+		}
+
+		public override string ToString()
+		{
+			return $"Security {Security?.Symbol}";
 		}
 
 	}
@@ -82,6 +86,11 @@ namespace MyStock
 			{
 				return 0;
 			}
+		}
+
+		public override string ToString()
+		{
+			return "Cash";
 		}
 
 	}

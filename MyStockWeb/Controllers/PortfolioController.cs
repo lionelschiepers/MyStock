@@ -215,28 +215,7 @@ namespace MyStockWeb.Controllers
 				result.CurrencyPositions.Add(dto);
 			}
 
-
-
-			/*
-
-						var totalMarketPrice = portfolio.TotalMarketPrice();
-						var totalCostPrice = portfolio.TotalCostPrice();
-						var totalDayDiff = portfolio.TotalDayDiff();
-
-						foreach (var position in positions.OfType<SecurityPosition>().Where(p => p.Shares > 0).OrderBy(p => p.Security.DayChange))
-						{
-
-							Console.WriteLine($"{position.Security.Price.ToString("0.##")} {position.Currency}\t{(position.Security.DayChange * 100).ToString("0.##")}%\t{(position.Shares * position.Security.Price * position.Security.DayChange).ToString("0")}\t{position.Security.Name} ({position.Security.Symbol})");
-						}
-
-						Console.WriteLine($"Total: {totalMarketPrice.ToString("0,000")} {((totalMarketPrice * 100.0 / totalCostPrice) - 100.0).ToString("0.##")}%");
-						Console.WriteLine($"Total Difference: {totalDayDiff.ToString("0")} {portfolio.TargetCurrency} ({(100.0 * totalDayDiff / totalMarketPrice).ToString("0.##")}%)");
-
-
-						string data = "my data";
-			*/
 			return Json(result);
-			//			return View();
 		}
 	}
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyStock
 {
@@ -46,7 +44,36 @@ namespace MyStock
 			return symbol.Substring(pos + 1);
 		}
 
-		public string Curreny { get; set; }
+		public string Curreny
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(m_Curreny))
+					return m_Curreny;
+
+				// sometime yahoo don't return any data and this field is not populated.
+				switch (Market)
+				{
+					case "PA":
+					case "DE":
+					case "BR":
+					case "AS":
+						return "EUR";
+
+					case "L":
+						return "GBp";
+
+				}
+
+				return m_Curreny;
+			}
+			set
+			{
+				m_Curreny = value;
+			}
+		}
+		private string m_Curreny;
+
 		public double Price { get; set; }
 		public double PreviousClosePrice { get; set; }
 
@@ -76,7 +103,7 @@ namespace MyStock
 						return DividendYield * 0.65 * 0.7;
 
 					case "ST":
-						return DividendYield * 0.7* 0.7;
+						return DividendYield * 0.7 * 0.7;
 
 					case "DE":
 						return DividendYield * 0.7362 * 0.7;
@@ -108,9 +135,5 @@ namespace MyStock
 				}
 			}
 		}
-
-
-
-		// public double ForwardDividendRate { get; set; }
 	}
 }
