@@ -139,8 +139,12 @@ namespace MyStockWeb.Controllers
 			if (String.IsNullOrEmpty(id))
 				id = "1";
 
+#if DEBUG
 			string portfolioPath = Path.Combine(_hostingEnvironment.ContentRootPath, "Data", id + ".csv");
-			
+#else
+			string portfolioPath = $"https://raw.githubusercontent.com/lionelschiepers/MyStock/master/MyStockWeb/Data/{id}.csv";
+#endif
+
 			Portfolio portfolio = builder.Build(portfolioPath);
 			portfolio.Update();
 			List<Position> positions = portfolio.CalculatePosition();

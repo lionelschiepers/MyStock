@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 
 namespace MyStock
 {
@@ -28,7 +29,9 @@ namespace MyStock
 				throw new ArgumentNullException(nameof(path));
 
 			List<Transaction> transactions = new List<Transaction>();
-			using (StreamReader sr = new StreamReader(File.OpenRead(path)))
+
+			using (HttpClient client = new HttpClient())
+			using (StreamReader sr = new StreamReader(path.StartsWith("http") ? client.GetStreamAsync(path).Result : File.OpenRead(path)))
 			using (CsvHelper.CsvReader reader = new CsvHelper.CsvReader(sr, new CsvHelper.Configuration.Configuration { }))
 			{
 				foreach (var row in reader.GetRecords<Row>())
