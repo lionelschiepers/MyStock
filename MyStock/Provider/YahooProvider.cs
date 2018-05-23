@@ -33,10 +33,18 @@ namespace MyStock.Provider
 				}
 			}
 
-			var task = Yahoo.GetHistoricalAsync(symbol, DateTime.Today.AddMonths(-2), DateTime.Today, Period.Daily);
-			task.Wait();
+			IEnumerable<Candle> result;
+			try
+			{
+				var task = Yahoo.GetHistoricalAsync(symbol, DateTime.Today.AddMonths(-2), DateTime.Today, Period.Daily);
+				task.Wait();
+				result = task.Result;
+			}
+			catch
+			{
+				return values;
+			}
 
-			IEnumerable<Candle> result = task.Result;
 			int count = result.Count();
 			const int n = 14;
 
