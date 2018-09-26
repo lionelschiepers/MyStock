@@ -206,7 +206,9 @@ namespace MyStock.Provider
 
 					if (result.Fields.ContainsKey("Currency" /* Enum.GetName(typeof(Field), Field.Currency)*/))
 						security.Curreny = result.Currency;
-					security.Price = result.RegularMarketPrice;
+
+					if (result.Fields.ContainsKey(Enum.GetName(typeof(Field), Field.RegularMarketPrice)))
+						security.Price = result.RegularMarketPrice;
 
 					if (result.Fields.ContainsKey(Enum.GetName(typeof(Field), Field.TrailingAnnualDividendYield)))
 						security.DividendYield = result.TrailingAnnualDividendYield;
