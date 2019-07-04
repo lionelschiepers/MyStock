@@ -27,8 +27,7 @@ namespace MyStock
 			var positions = CalculatePosition();
 			foreach(var position in positions)
 			{
-				SecurityPosition sec = position as SecurityPosition;
-				if (sec != null)
+				if (position is SecurityPosition sec)
 				{
 					if (sec.Shares == 0)
 						continue;
@@ -48,11 +47,13 @@ namespace MyStock
 			var positions = CalculatePosition();
 			foreach (var position in positions)
 			{
-				if ((position as SecurityPosition)?.Shares == 0)
-					continue;
-
-				if (String.IsNullOrEmpty(position.Currency))
-					throw new NullReferenceException($"not currency for {position}");
+				if (position is SecurityPosition sec)
+				{
+					if (sec.Shares == 0)
+						continue;
+					if (sec.Security.Price == 0)
+						continue;
+				}
 				double rate = ExchangeRates.ConvertTo(position.Currency, position.CostPrice, TargetCurrency);
 				result += rate;
 			}
