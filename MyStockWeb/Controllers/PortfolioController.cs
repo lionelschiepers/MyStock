@@ -119,9 +119,9 @@ namespace MyStockWeb.Controllers
 	/// </summary>
 	public class PortfolioController : Controller
 	{
-		private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly Microsoft.AspNetCore.Hosting.IWebHostEnvironment _hostingEnvironment;
 
-		public PortfolioController(IHostingEnvironment hostingEnvironment)
+		public PortfolioController(Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnvironment)
 		{
 			_hostingEnvironment = hostingEnvironment;
 		}
