@@ -1,4 +1,5 @@
 ﻿Symbol,Name,Type,Date,Shares,Price,Cash value,Commission,Notes
+BIM.PA,BioMerieux S.A.,Buy,"Mar 9, 2020",20,80.37,,0,
 MDT,Medtronic plc,Buy,"Feb 19, 2020",19,111.59,,0,
 DECB.BR,Deceuninck NV,Buy,"Feb 26, 2020",1000,1.948,,0,
 ADP.PA,Groupe ADP,Buy,"Feb 26, 2020",10,151.1,,0,
@@ -320,6 +321,7 @@ OFS,OFS Capital Corp,Buy,"Jan 19, 2018",110,12.12,,0,
 SEV.PA,Suez SA,Buy,"Jan 22, 2018",75,13.96,,0,
 SEV.PA,Suez SA,Buy,"Jan 24, 2018",45,12,,0,
 SEV.PA,Suez SA,Buy,"Feb 6, 2018",65,11.54,,0,
+SEV.PA,Suez SA,Buy,"Mar 9, 2020",100,13.86,,0,
 ECONB.BR,Econocom Group SE,Buy,"Jan 22, 2018",160,6.664,,0,
 ECONB.BR,Econocom Group SE,Buy,"Mar 5, 2018",165,6.24,,0,
 ECONB.BR,Econocom Group SE,Buy,"Apr 20, 2018",180,5.56,,0,
@@ -418,6 +420,7 @@ WDI.DE,Wirecard AG,Buy,"Oct 2, 2019",9,144.58,,0,
 SAVE.PA,Savencia SA,Buy,"Nov 12, 2019",30,60.45,,0,
 VOD.L,Vodafone PLC,Buy,"Nov 12, 2019",1125,162.9,,0,
 RF.PA,Eurazeo SE,Buy,"Nov 15, 2019",22,62.66,,0,
+RF.PA,Eurazeo SE,Buy,"Mar 9, 2020",23,58.63,,0,
 ,Cash,Deposit Cash,"Jul 13, 2015",,,,35.00,fusion lafarge
 ,Cash,Deposit Cash,"Jul 20, 2015",,,,346.88,Koninklijke Ten Cate NV
 ,Cash,Deposit Cash,"Sep 7, 2015",,,,208.01,Compagnie Maritime Belge SA
